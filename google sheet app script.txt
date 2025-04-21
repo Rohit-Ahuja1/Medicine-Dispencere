@@ -1,0 +1,26 @@
+function doPost(e) {
+  var sheet = SpreadsheetApp.openById("1CgyiQBrf_9ro5cCn22zsKKgw7DBPKFqVh-oBlSI_bWg").getSheetByName("Logs");
+
+  var data = JSON.parse(e.postData.contents);
+  var uid = data.uid;
+  
+  var user = lookupUser(uid);
+  var timestamp = Utilities.formatDate(new Date(), Session.getScriptTimeZone(), "yyyy-MM-dd HH:mm:ss");
+
+  if (user) {
+    sheet.appendRow([timestamp, uid, user.name, user.medicine]);
+  } else {
+    sheet.appendRow([timestamp, uid, "Unknown", "Unknown"]);
+  }
+
+  return ContentService.createTextOutput("Success");
+}
+
+function lookupUser(uid) {
+  var uidMap = {
+    "0x7110F67B": { name: "Rohit", medicine: "Paracetamol" },
+    "0x3387CD28": { name: "Kayam", medicine: "Cetirizine" }
+  };
+
+  return uidMap[uid] || null;
+}
