@@ -5,7 +5,7 @@
 #include <WiFiClientSecure.h>
 
 // WiFi credentials
-const char* ssid = "Sagar";
+const char* ssid = "Rohit";
 const char* password = "12345678";
 
 // Google Apps Script Web App (original deployment URL)
